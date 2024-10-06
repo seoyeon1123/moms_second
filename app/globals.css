@@ -1,0 +1,29 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* styles/globals.css 또는 다른 CSS 파일에 추가 */
+/* styles/globals.css 또는 다른 CSS 파일에 추가 */
+.text-outline {
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
+    1px 1px 0 #000;
+}
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+.spin-slow {
+  animation: spin 10s linear infinite;
+}
+
+.btn {
+  @apply w-full min-w-[350px] h-12 bg-orange-500 text-lg text-center flex items-center justify-center rounded-2xl active:bg-orange-400 text-white;
+}
+
+.mainTap {
+  @apply transition-transform duration-300 ease-in-out hover:scale-110 hover:text-orange-600;
+}

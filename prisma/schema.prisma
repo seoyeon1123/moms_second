@@ -1,0 +1,74 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id         Int      @id @default(autoincrement())
+  username   String   @unique
+  email      String   @unique
+  password   String
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  babyProfiles BabyProfile[]
+  products Product[]
+
+  like Like[]
+  post Post[]
+}
+
+model BabyProfile {
+  id Int @id @default(autoincrement())
+  babyImage String
+  babyname String 
+  babyAge String
+  babyGender String
+  nickName String @unique
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  user        User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId Int
+}
+
+model Product {
+  id Int @id @default(autoincrement())
+  title String
+  description String
+  photo String
+  category String
+  price Int?
+  share Boolean?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  user        User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId Int
+
+  views Int @default(0)
+  like Like[]
+}
+
+model Like {
+  @@id(name : "id", [userId, productId]) 
+  user        User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId Int
+
+  product        Product         @relation(fields: [productId], references: [id], onDelete: Cascade)
+  productId Int
+}
+
+model Post {
+  id Int @id @default(autoincrement())
+  title String
+  description String
+  photo String?
+  category String
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  views Int @default(0)
+  user        User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId Int
+}
